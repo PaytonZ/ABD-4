@@ -1,0 +1,32 @@
+--a) – Ejecuta el Ejeprac2.sql para restaurar la BDejemplo.
+--b) – Crear un procedimiento en la BD y ejecutarlo:
+-- Abrir en el sql-Developer el fichero ejemplo: cursor3.sql
+-- Ejecutar el fichero:
+--Este fichero crea un procedimiento dentro de Oracle llamado cursor3 (NO lo ejecuta)
+-- Consultar el procedimiento creado:
+-- Bajo la conexión BD, en carpeta Procedimientos: aparecen todos los procedimientos creados:
+--ábrelo -> Se abre en un editor diferente: permite compilar en os modos, ejecutar, debug
+-- En ese editor: Ejecutarlo con icono Triángulo: aparece un cuadro con varios datos a introducir.
+--En este caso no hay datos, pulsar aceptar. Se ejecuta y da resultado en ventana LOG, abajo.
+--Ejecutará el procedimiento entero: begin cursor3; end;
+
+Connecting to the database pmuser.
+---- cursor3: sumando , DNI: 00000002
+---- cursor3: restando , DNI: 00000004
+--> cursor3: proceso acabado por EXIT loop
+Process exited.
+Disconnecting from the database pmuser.
+
+
+--c) – Para ver con instrucción SQL qué objetos (procedimientos en este caso) tenemos creados ejecuta:
+--select object_type, object_name
+--from user_objects
+--where object_type ='PROCEDURE';
+
+OBJECT_TYPE             OBJECT_NAME                                                                                                                    
+----------------------- --------------------------------------------------------------------------------------------------------------------------------
+PROCEDURE               CURSOR3                                                                                                                          
+
+
+--d) – Comprueba qué se ha modificado en la BDejemplo con consultas a la tabla correspondiente.
+
