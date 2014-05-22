@@ -1,4 +1,4 @@
---a) – Ejecuta el Ejeprac2.sql para restaurar la BDejemplo.
+﻿--a) – Ejecuta el Ejeprac2.sql para restaurar la BDejemplo.
 --b) – Crear un procedimiento en la BD y ejecutarlo:
 -- Abrir en el sql-Developer el fichero ejemplo: cursor3.sql
 -- Ejecutar el fichero:
@@ -29,4 +29,28 @@ PROCEDURE               CURSOR3
 
 
 --d) – Comprueba qué se ha modificado en la BDejemplo con consultas a la tabla correspondiente.
+
+DNI      NOMBREE                CANTIDAD TIPO     
+-------- -------------------- ---------- ----------
+00000002 Empresa 55               210001 bono1      
+00000002 Empresa 55               220001 bono2      
+00000002 Empresa 55               230001 bono3      
+00000002 Empresa 44               240001 bono4      
+00000004 Empresa 22               409999 bono1      
+00000004 Empresa 22               419999 bono2      
+
+ 6 filas seleccionadas 
+
+Se vuelve a ejecutar el cursor.
+
+DNI      NOMBREE                CANTIDAD TIPO     
+-------- -------------------- ---------- ----------
+00000002 Empresa 55               210002 bono1      
+00000002 Empresa 55               220002 bono2      
+00000002 Empresa 55               230002 bono3      
+00000002 Empresa 44               240002 bono4      
+00000004 Empresa 22               409998 bono1      
+00000004 Empresa 22               419998 bono2      
+
+ 6 filas seleccionadas 
 

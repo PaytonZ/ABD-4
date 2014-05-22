@@ -1,0 +1,93 @@
+--APARTADO 3.-
+--Para familiarizarse con los triggers ejecute el ejemplo que se proporciona:
+--a) – ejecuta el Ejeprac2.sql para restaurar la BDejemplo de nuevo.
+--b) – Para crear el disparador o trigger en el sql-Developer:
+--b.1) Antes, debes crear una secuencia que usa el trigger:
+-- Pero falta el privilegio "create sequence". Se entra en el ADMINUSER
+--- Dentro escribe la instrucción:
+--GRANT create sequence TO tuUsuario;
+--- Sales del ADMINUSER
+-- Ahora ya podemos crear la secuencia:
+--a).- Vamos a carpeta “Secuencias” en tu conexión
+--y botón dcho. Escogemos nueva secuencia, no hace falta ningún argumento
+--solo el nombre : cuentapremio
+--b).- También existe la sentencia:
+--create sequence cuentapremio;
+--b.2) Abre en el sql-Developer el fichero ejemplo: trigger3.sql
+--b.3) Comprobar que ha sido creado, en la carpeta Disparadores (refresca si no aparece)
+--o con sentencia:
+--select object_type, object_name
+--from user_objects
+--where object_type ='TRIGGER';
+
+OBJECT_TYPE         OBJECT_NAME                                                                                                                    
+------------------- --------------------------------------------------------------------------------------------------------------------------------
+TRIGGER             TRIGGER3                                                                                                                         
+
+
+--b.4) Abrirlo desde el menú de Disparadores: se abre un editor donde se puede editar y compilar (ruedas),
+--pero no se puede ejecutar como en el procedimiento. Hay que provocar el disparo (siguiente apartado).
+-- Para comprobar si ha dado errores: una ventana abajo da mensajes de error.
+--c) Sigue estos pasos:
+-- Provoca el disparo del trigger3 ejecuta:
+--update invierte
+--set cantidad = 1000001
+--where dni = '00000003';
+
+2 filas actualizadas.
+
+select * from 
+compras 
+where dni = '00000003';
+
+DNI            NUMT       NUMF      FECHA TIENDA                  IMPORTE
+-------- ---------- ---------- ---------- -------------------- ----------
+00000003   30000002          1        501 tienda7                       3 
+00000003   30000300          1        501 tienda7                      30 
+00000003   30000020          1        501 tienda7                     300 
+00000003   30000020          2        501 tienda7                    3000 
+00000003   30000020          3        501 tienda8                   30000 
+00000003   10000001          1        999 REGALO                      100 
+00000003   10000001          2        999 REGALO                      100 
+
+ 7 filas seleccionadas 
+
+ Como se puede comprobar se actualizaron dos filas y ambas dispararon el 'trigger' y se encuentra un regalo de 100 por cada uno.
+
+-- Comprueba si se ha disparado: haz consulta sql adecuada
+-- Ejecuta ahora esta instrucción: (no debería dispararlo)
+--update invierte
+--set cantidad = 100000
+--where dni = '00000003';
+
+2 filas actualizadas.
+
+-- Comprueba si se ha disparado: haz consulta sql adecuada
+-- Modifica el procedimiento cursor3 para que se dispare trigger3 cuando se ejecuta cursosr3.
+-- Comprueba si se ha disparado: haz consulta sql adecuada
+
+select * from 
+compras 
+where dni = '00000003';
+
+DNI            NUMT       NUMF      FECHA TIENDA                  IMPORTE
+-------- ---------- ---------- ---------- -------------------- ----------
+00000003   30000002          1        501 tienda7                       3 
+00000003   30000300          1        501 tienda7                      30 
+00000003   30000020          1        501 tienda7                     300 
+00000003   30000020          2        501 tienda7                    3000 
+00000003   30000020          3        501 tienda8                   30000 
+00000003   10000001          1        999 REGALO                      100 
+00000003   10000001          2        999 REGALO                      100 
+
+ 7 filas seleccionadas 
+
+ docx: -Explica qué hace el trigger.
+
+Realiza una comprobacion despues de una actualizacion o insercion.
+para cada fila cuya nueva cantidad de inversion sea más de 100000.00
+
+Genera un numero aleatorio unico para la nueva factura e inserta una compra con valor 100 y concepto regalo a ese usuario.
+
+
+
