@@ -1,0 +1,93 @@
+Básandote en el ejemplo de ejecución de Oracle visto en clase, vas a hacer dos Ejemplos de ejecución. Para
+cada ejemplo, ejecuta en dos sesiones concurrentes, las mismas operaciones de consulta y actualización usando
+la BDejemplo. El objetivo es provocar dos comportamientos distintos cuando usas los dos niveles de
+aislamiento : Read Commited y Serializable
+- Ejemplo 1: las dos sesiones con Read Commited
+- Ejemplo 2: : las dos sesiones con Serializable
+Para entregar: Haz una tabla con los pasos seguidos en el tiempo, y dos columnas, una para cada sesión,
+indicando cada paso dado y resultado obtenido. Las respuestas a las preguntas las contestas dentro de la misma
+tabla. Separa los dos ejemplos en dos tablas:
+======= EJEMPLO 1 ===========
+PASOS: Síguelos en el orden descrito:
+- Abre dos conexiones (en el enunciado: Sesión 1 es la 1ª que abriste)
+- abriendo sql Developer dos veces y conectándote con tu usuario
+- después abre un editor: menú Herramientas + Hoja de Trabajo SQL
+- en la Sesión 1:
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+set autocommit off; (siempre puedes comprobarlo con show autocommit)
+- en la Sesión 2:
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+set autocommit off;
+- en la Sesión 1:
+Una consulta de una tabla (por ejemplo COMPRAS) que solo devuelva una fila
+Actualiza la misma fila y el mismo atributo
+Consulta esa fila y atributo: ¿Qué valor ves?
+- en la Sesión 2:
+- Consulta esa fila y atributo: ves lo mismo?
+- Actualiza la misma fila y el mismo atributo con otro valor
+-Que sucede?
+Oracle no debería responder : Porqué?
+- en la Sesión 1:
+- Escribe un commit
+- Consulta esa fila y atributo: que ves?, de donde ha salido?
+- Se ha perdido la actualización de sesión 1?
+- Cómo solucionarlo? Ver la ejecución del ejemplo 2 a continuación
+
+SESSION 1
+---------------------------------------------------
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+transaction ISOLATION correcto.
+SELECT * from compras where importe=50;
+
+DNI            NUMT       NUMF      FECHA TIENDA                  IMPORTE
+-------- ---------- ---------- ---------- -------------------- ----------
+00000005   50000400          1        501 tienda1                      50 
+
+UPDATE compras set fecha=505 where importe = 50;
+
+1 filas actualizadas.
+
+SELECT * from compras where importe=50;
+
+DNI            NUMT       NUMF      FECHA TIENDA                  IMPORTE
+-------- ---------- ---------- ---------- -------------------- ----------
+00000005   50000400          1        505 tienda1                      50 
+
+
+
+
+SESSION 2 
+-----------------------------------------------------------------------------
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SELECT * from compras where importe=50;
+UPDATE compras set fecha=508 where importe = 50;
+
+<< SE QUEDA BLOQUEADO EL PROMPT >>
+
+1 filas actualizadas
+
+
+transaction ISOLATION correcto.
+DNI            NUMT       NUMF      FECHA TIENDA                  IMPORTE
+-------- ---------- ---------- ---------- -------------------- ----------
+00000005   50000400          1        501 tienda1                      50 
+
+
+SESSION 1
+-----------------------------------------------------------------------------
+
+COMMIT;
+
+confirmado.
+
+======= EJEMPLO 2 ===========
+? Repetir los mismos pasos , teniendo en ambas sesiones
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+- Se ha perdido algo ahora?
+- Cómo lo ha solucionado Oracle?
+Entregar: Ficheros prac45.sql con la tabla de dos columnas y las respuestas, en texto, a las preguntas dentro de la
+tabla.
